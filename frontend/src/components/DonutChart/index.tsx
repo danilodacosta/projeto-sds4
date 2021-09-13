@@ -15,14 +15,17 @@ const DonutChart = () => {
     series: [],
   });
 
-  useEffect(() => {
+  async function loadAmountBySeller() {
     axios.get(`${BASE_URL}/sales/amount-by-seller`).then((response) => {
       const data = response.data as SaleSum[];
       const mylabels = data.map((x) => x.sellerName);
       const mySeries = data.map((x) => x.sum);
-      setChartData({ labels: mylabels, series: mySeries });
-      console.log(chartData);
+      setChartData({ labels: mylabels, series: mySeries });      
     });
+  }
+
+  useEffect(() => {
+    loadAmountBySeller();
   }, []);
 
   const options = {
